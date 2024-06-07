@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import { AppError } from "../utils/AppError.js";
+import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 export const SignUp = async (req, res, next) => {
   try {
@@ -27,6 +28,7 @@ export const SignUp = async (req, res, next) => {
       profilePicture: gender === "male" ? boyAvatar : girlAvatar,
     });
     if (newUser) {
+      generateTokenAndSetCookie(newUser._id, res);
       await newUser.save();
       res.status(201).json({
         _id: newUser._id,
@@ -42,9 +44,39 @@ export const SignUp = async (req, res, next) => {
     return next(new AppError(`Internal Server Error`, 500));
   }
 };
-export const Login = (req, res) => {
-  console.log("Login User");
+export const Login = async (req, res, next) => {
+  try {
+    const { userName, password } = req.body;
+    const user = await User.findOne({ userName });
+    if (user) {
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        user?.password || ""
+      );
+      if (!isPasswordCorrect) {
+        return next(new AppError(`Please enter the correct password`, 400));
+      }
+      generateTokenAndSetCookie(user._id, res);
+      res.status(200).json({
+        _id: user._id,
+        fullName: user.fullName,
+        userName: user.userName,
+        profilePicture: user.profilePicture,
+      });
+    } else {
+      return next(new AppError(`User does not exist`, 400));
+    }
+  } catch (error) {
+    console.log("Error while logging up", error);
+    return next(new AppError(`Internal Server Error`, 500));
+  }
 };
 export const Logout = (req, res) => {
-  console.log("Logout User");
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error while logging out", error);
+    return next(new AppError(`Internal Server Error`, 500));
+  }
 };
