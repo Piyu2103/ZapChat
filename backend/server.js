@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.js";
 import messageRoutes from "./routes/message.js";
+import userRoutes from "./routes/user.js"
+
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import globalErrorHandler from "./middlewares/errorMiddleware.js";
 
@@ -16,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/users",userRoutes);
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
