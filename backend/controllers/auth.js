@@ -37,11 +37,11 @@ export const SignUp = async (req, res, next) => {
         profilePicture: newUser.profilePicture,
       });
     } else {
-      return next(new AppError(`Invalid User Data`, 400));
+      return next(new AppError(`Invalid User Data!`, 400));
     }
   } catch (error) {
     console.log("Error while signing up", error);
-    return next(new AppError(`Internal Server Error`, 500));
+    return next(new AppError(`Internal Server Error!`, 500));
   }
 };
 export const Login = async (req, res, next) => {
@@ -54,7 +54,7 @@ export const Login = async (req, res, next) => {
         user?.password || ""
       );
       if (!isPasswordCorrect) {
-        return next(new AppError(`Please enter the correct password`, 400));
+        return next(new AppError(`Please enter the correct password!`, 400));
       }
       generateTokenAndSetCookie(user._id, res);
       res.status(200).json({
@@ -64,11 +64,11 @@ export const Login = async (req, res, next) => {
         profilePicture: user.profilePicture,
       });
     } else {
-      return next(new AppError(`User does not exist`, 400));
+      return next(new AppError(`User does not exist!`, 400));
     }
   } catch (error) {
     console.log("Error while logging up", error);
-    return next(new AppError(`Internal Server Error`, 500));
+    return next(new AppError(`Internal Server Error!`, 500));
   }
 };
 export const Logout = (req, res) => {
