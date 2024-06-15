@@ -9,6 +9,7 @@ const Message = ({ message }) => {
   const [classNameStyle, setClassNameStyle] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [bubbleColor, setBubbleColor] = useState("");
+  const shakeClass=message.shouldShake?"shake":""
   function formatTimeToHoursAndMinutes(timestamp) {
     const date = new Date(timestamp);
 
@@ -42,7 +43,7 @@ const Message = ({ message }) => {
             />
           </div>
         </div>
-        <div className={`chat-bubble text-white ${bubbleColor}`}>
+        <div className={`chat-bubble text-white ${bubbleColor} ${shakeClass}`}>
           {message?.message}
         </div>
         <div className="chat-footer opacity-50 text-xs flex gap-1 items-center mt-1">

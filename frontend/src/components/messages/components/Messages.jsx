@@ -3,10 +3,12 @@ import useGetMessages from "../../../hooks/useGetMessages";
 import MessageSkeleton from "../../skeletons/MessageSkeleton";
 import Message from "./Message";
 import useConversation from "../../../store/useConversation";
+import useListenMessages from "../../../hooks/useListenMessages";
 
 const Messages = () => {
   const { messages, isLoading } = useGetMessages();
   const { selectedConversation } = useConversation();
+  useListenMessages();
   const lastMessageRef = useRef(null);
   useEffect(()=>{
     setTimeout(() => {

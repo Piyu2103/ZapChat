@@ -1,6 +1,8 @@
 import { AppError } from "../utils/AppError.js";
 import Conversation from "../models/conversation.js";
 import Message from "../models/message.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
+
 export const sendMessage = async (req, res, next) => {
   try {
     const { message } = req.body;
@@ -34,6 +36,11 @@ export const sendMessage = async (req, res, next) => {
     }
 
     await Promise.all([conversation.save(),newMessage.save()]);
+
+    const receiverSocketId=getReceiverSocketId(receiverId);
+    if(receiverSocketId){
+      io.to(receiverSocketId).emit("newMessage",newMessage)
+    }
     
     res.status(201).json(newMessage);
 
@@ -52,10 +59,10 @@ export const getMessages=async(req,res,next)=>{
         }).populate("messages");
 
         if(!conversation){
-            res.status(200).json([]);
+            return res.status(200).json([]);
         }
 
-        res.status(200).json(conversation.messages);
+        res.status(200).json(conversation?.messages);
 
     } catch (error) {
         console.log("Error while getting the messages", error);
