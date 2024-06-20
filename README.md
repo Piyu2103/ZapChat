@@ -93,8 +93,6 @@ To get a local copy up and running, follow these simple steps.
 2. Install NPM packages
    ```sh
    npm install
-   ```
-   ```
 3. Run `npm test` in the project directory to run all the test cases.
 
 
