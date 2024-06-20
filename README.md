@@ -53,11 +53,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-• ZapChat facilitates users to login/signup and experience the multi-user and real-time chat communication features.
-• Leveraged Socket.io library for events based and bidirectional communication between the client and the server.
-• Created endpoints for retrieving messages and fetching user lists. Leveraged Mongoose for data modeling and interaction
-with MongoDB and ensured secure and efficient data handling with authentication and authorization protocols.
-• Developed reusable components and custom hooks for modularity and reusability; used authContext and zustand for
+* ZapChat facilitates users to login/signup and experience the multi-user and real-time chat communication features.
+* Leveraged Socket.io library for events based and bidirectional communication between the client and the server.
+* Created endpoints for retrieving messages and fetching user lists.
+* Leveraged Mongoose for data modeling and interaction with MongoDB and ensured secure and efficient data handling with authentication and authorization protocols.
+* Developed reusable components and custom hooks for modularity and reusability; used authContext and zustand for
 global state managemen
 
 
